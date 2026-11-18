@@ -65,6 +65,10 @@ namespace Rumors.UI
             var ds = dailyUI.AddComponent<DailySettlementUI>();
             ds.BuildUI(canvasRoot);
 
+            var clockUI = new GameObject("[WorldClockUI]");
+            clockUI.transform.SetParent(canvasRoot,false);
+            clockUI.AddComponent<WorldClockUI>().BuildUI(canvasRoot);
+
             var sceneNav = new GameObject("[SceneNavigatorUI]");
             sceneNav.transform.SetParent(canvasRoot, false);
             var sn = sceneNav.AddComponent<SceneNavigatorUI>();

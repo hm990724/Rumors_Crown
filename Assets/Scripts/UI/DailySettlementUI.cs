@@ -65,7 +65,7 @@ namespace Rumors.UI
                 new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 1f));
 
             // Centered Continue Button
-            RumorUIHelper.CreateButton(panel.transform, "NextDayBtn", "▶  다음 날 시작",
+            RumorUIHelper.CreateButton(panel.transform, "NextDayBtn", "닫기",
                 new Vector2(220f, 44f), new Vector2(0f, 24f),
                 OnNextDay, Color.white,
                 new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f));
@@ -116,14 +116,16 @@ namespace Rumors.UI
                 _logText.text = sb.ToString();
             }
 
-            _overlay.SetActive(true);
-            TimeManager.Instance?.SetSpeed(GameSpeed.Paused);
+            // Settlement is recorded, but gameplay continues uninterrupted.
+            _overlay.SetActive(false);
         }
+
+        public void ShowLastReport() { if(_overlay!=null) _overlay.SetActive(true); }
 
         private void OnNextDay()
         {
             _overlay.SetActive(false);
-            TimeManager.Instance?.Resume();
+            // Manual report dismissal must not alter game speed.
         }
     }
 }

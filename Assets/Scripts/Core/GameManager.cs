@@ -14,7 +14,7 @@ namespace Rumors.Core
     {
         public static GameManager Instance { get; private set; }
 
-        [SerializeField] private bool pauseAfterDay = true;
+        [SerializeField] private bool pauseAfterDay = false;
 
         public event Action<DailyReportData> OnDaySettled;
 
@@ -44,7 +44,7 @@ namespace Rumors.Core
             MonsterManager.Instance?.ProcessDaily(report);
             HeroManager.Instance?.CheckSpawn(DemonLordManager.Instance?.Fame ?? 0, day);
 
-            if (day % 30 == 0) RumorManager.Instance?.Generate(RumorType.Exaggeration);
+            if (day % 10 == 0) RumorManager.Instance?.Generate(RumorType.Exaggeration);
 
             ResourceManager.Instance?.ResetDailyTracker();
 

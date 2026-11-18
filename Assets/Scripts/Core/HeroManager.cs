@@ -10,6 +10,7 @@ namespace Rumors.Core
         public static HeroManager Instance { get; private set; }
 
         private readonly List<HeroData> _heroes = new List<HeroData>();
+        private int _nextRaidDay = 8;
         public IReadOnlyList<HeroData> Heroes => _heroes;
 
         public event Action<HeroData> OnHeroInvading;
@@ -27,9 +28,8 @@ namespace Rumors.Core
 
         public void CheckSpawn(int demonFame, int day)
         {
-            if (demonFame < 20 || day % 10 != 0) return;
-            float chance = Mathf.Clamp01(demonFame / 100f) * 0.5f;
-            if (UnityEngine.Random.value > chance) return;
+            if (day < _nextRaidDay) return;
+            _nextRaidDay = day + UnityEngine.Random.Range(7,11);
 
             var h = new HeroData
             {
