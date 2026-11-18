@@ -78,6 +78,17 @@ namespace Rumors.UI
             rumorPanel.transform.SetParent(canvasRoot, false);
             var rp = rumorPanel.AddComponent<RumorPanelUI>();
             rp.BuildUI(canvasRoot);
+
+            // RUMORS Overhaul integrates with the original resource/building/monster managers.
+            var directorGo = new GameObject("[RumorsWorldDirector]");
+            directorGo.transform.SetParent(canvasRoot, false);
+            directorGo.AddComponent<Rumors.Overhaul.RumorsWorldDirector>();
+            var overhaulGo = new GameObject("[RumorsOverhaulUI]");
+            overhaulGo.transform.SetParent(canvasRoot, false);
+            overhaulGo.AddComponent<Rumors.Overhaul.RumorsOverhaulUI>().BuildUI(canvasRoot);
+            var sceneGo = new GameObject("[RumorsPlayableScenes]");
+            sceneGo.transform.SetParent(canvasRoot, false);
+            sceneGo.AddComponent<Rumors.Overhaul.RumorsPlayableScenes>().BuildUI(canvasRoot);
         }
     }
 }

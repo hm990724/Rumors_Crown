@@ -68,6 +68,8 @@ namespace Rumors.Core
                     });
                 }
 
+            if (Rumors.Overhaul.RumorsWorldDirector.Instance != null)
+                data.RumorsOverhaulJson = Rumors.Overhaul.RumorsWorldDirector.Instance.ExportJson();
             File.WriteAllText(SavePath, JsonUtility.ToJson(data, true));
             Debug.Log($"[Save] 저장 완료: {SavePath}");
         }
@@ -87,8 +89,16 @@ namespace Rumors.Core
                 var keys = new System.Collections.Generic.List<Vector2Int>(BuildingManager.Instance.Placed.Keys);
                 foreach (var k in keys) BuildingManager.Instance.Demolish(k);
                 foreach (var bs in data.Buildings)
-                    BuildingManager.Instance.PlaceInternal((BuildingType)bs.Type,
-                        new Vector2Int(bs.GridX, bs.GridY), bs.IsConstructed);
+                {
+                    var gp=new Vector2Int(bs.GridX,bs.GridY);
+                    var building=BuildingManager.Instance.GetAt(gp);
+                    if(building==null || building.Type!=(BuildingType)bs.Type)
+                        building=BuildingManager.Instance.PlaceInternal((BuildingType)bs.Type,gp,bs.IsConstructed);
+                    building.SetLevel(bs.Level);
+                    building.IsBuilt=bs.IsConstructed;
+                    building.DaysLeft=bs.DaysUntilBuilt;
+                    building.Visual?.SetBuilt(bs.IsConstructed);
+                }
             }
 
             if (MonsterManager.Instance != null)
@@ -106,11 +116,27 @@ namespace Rumors.Core
                             ? new Vector2Int(ms.AssignedBuildingX, ms.AssignedBuildingY)
                             : (Vector2Int?)null,
                     };
+                    m.RestoreId(ms.Id);
                     m.Traits.AddRange(ms.Traits);
                     MonsterManager.Instance.Spawn(m, new Vector3(ms.WorldX, ms.WorldY));
                 }
             }
 
+            // Reattach workers by their stable IDs after both buildings and monsters exist.
+            if (BuildingManager.Instance != null && MonsterManager.Instance != null)
+                foreach (var bs in data.Buildings)
+                {
+                    var b=BuildingManager.Instance.GetAt(new Vector2Int(bs.GridX,bs.GridY));
+                    if(b==null)continue;
+                    foreach(var id in bs.WorkerMonsterIds)
+                    {
+                        var m=MonsterManager.Instance.GetById(id);
+                        if(m!=null)BuildingManager.Instance.AssignWorker(b,m);
+                    }
+                }
+            DemonLordManager.Instance?.SetFame(data.DemonFame);
+            if (Rumors.Overhaul.RumorsWorldDirector.Instance != null)
+                Rumors.Overhaul.RumorsWorldDirector.Instance.ImportJson(data.RumorsOverhaulJson);
             Debug.Log("[Save] 불러오기 완료");
             return true;
         }

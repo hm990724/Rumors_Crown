@@ -26,6 +26,27 @@ namespace Rumors.Core
             Instance = this;
         }
 
+
+        // Ruler class influences REAL game state, including defensive power.
+        public int RulerKind { get; private set; }
+        public void SetAuthority(int amount) => Authority = Mathf.Clamp(amount,0,100);
+        public void SetFame(int amount) { Fame = Mathf.Max(0,amount); OnFameChanged?.Invoke(Fame); }
+        public void ConfigureArchetype(int kind)
+        {
+            RulerKind = kind;
+            switch(kind)
+            {
+                case 1: // Black Flame: authority & military strength; greater external threat handled by world director
+                    Name = "흑염 군주"; Authority = 84; Power = 165; MaxHP = 720; break;
+                case 2: // Blood Moon: rumor/trade power, fragile defense
+                    Name = "혈월 여왕"; Authority = 57; Power = 83; MaxHP = 390; break;
+                case 3: // Wraith: magically oriented ruler
+                    Name = "망령 군주"; Authority = 65; Power = 104; MaxHP = 500; break;
+                default: return;
+            }
+            CurrentHP = MaxHP;
+        }
+
         public void GainFame(int v)
         {
             Fame += v;

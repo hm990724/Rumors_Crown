@@ -48,7 +48,13 @@ namespace Rumors.UI
         {
             RumorUIHelper.CreateButton(_root.transform, "Nav_" + label, label,
                 new Vector2(290f, 46f), new Vector2(0f, y),
-                () => ShowTooltip(tooltip),
+                () => {
+                    Hide();
+                    var ui=Rumors.Overhaul.RumorsOverhaulUI.Instance;
+                    if(ui!=null)
+                        ui.OpenRoom(label.Contains("저잣거리")?"저잣거리":label.Contains("던전")?"전투":"소문");
+                    else ShowTooltip(tooltip);
+                },
                 Color.white,
                 new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 1f));
         }

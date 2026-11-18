@@ -48,7 +48,7 @@ namespace Rumors.Core
 
             ResourceManager.Instance?.ResetDailyTracker();
 
-            if (pauseAfterDay) TimeManager.Instance?.Pause();
+            // Daily report remains available on demand; day progression is not blocked.
 
             OnDaySettled?.Invoke(report);
             Debug.Log($"[Game] Day {day} settled. Gold earned={report.GoldEarned}, Food={report.FoodProduced - report.FoodConsumed}");

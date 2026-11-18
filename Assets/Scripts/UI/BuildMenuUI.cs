@@ -30,12 +30,12 @@ namespace Rumors.UI
         {
             // Panel: slides up from bottom (Height expanded to 340px for generous breathing room)
             _root = RumorUIHelper.CreatePanel(canvasRoot, "BuildMenuPanel",
-                new Vector2(0, 0), new Vector2(0, 340),
+                new Vector2(0, 0), new Vector2(0, 280),
                 new Vector2(0.06f, 0), new Vector2(0.94f, 0),
                 Color.white);
             var rt = _root.GetComponent<RectTransform>();
             rt.pivot = new Vector2(0.5f, 0f);
-            rt.anchoredPosition = new Vector2(0f, -350f);
+            rt.anchoredPosition = new Vector2(0f, -290f);
 
             // Title
             _titleText = RumorUIHelper.CreateText(_root.transform, "Title", "✦ 영지 건설 ✦",
@@ -108,7 +108,7 @@ namespace Rumors.UI
             if (!_isOpen) return;
             _isOpen = false;
             if (_slideCR != null) StopCoroutine(_slideCR);
-            _slideCR = StartCoroutine(SlideCR(-350f, () => _root.SetActive(false)));
+            _slideCR = StartCoroutine(SlideCR(-290f, () => _root.SetActive(false)));
         }
 
         private System.Collections.IEnumerator SlideCR(float targetY, System.Action onDone = null)
@@ -148,7 +148,7 @@ namespace Rumors.UI
             card.transform.SetParent(_cardContainer, false);
             var crt = card.AddComponent<RectTransform>();
             // Expanded card width from 150f to 215f for clear typography and generous click bounds
-            crt.sizeDelta = new Vector2(215f, 0f);
+            crt.sizeDelta = new Vector2(196f, 0f);
 
             var bg = card.AddComponent<Image>();
             bg.sprite = SpriteRegistry.GetPanel();

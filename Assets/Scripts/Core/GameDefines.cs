@@ -154,6 +154,7 @@ namespace Rumors.Core
         public int CurrentDay=1, CurrentMonth=1, CurrentYear=1;
         public int Gold, Mana, Food, Ore;
         public int RumorStack, DemonFame;
+        public string RumorsOverhaulJson;
         public List<BuildingSaveItem> Buildings = new List<BuildingSaveItem>();
         public List<MonsterSaveItem> Monsters   = new List<MonsterSaveItem>();
     }

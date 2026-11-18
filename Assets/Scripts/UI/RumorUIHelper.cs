@@ -15,7 +15,7 @@ namespace Rumors.UI
         {
             if (_korFont != null) return _korFont;
             _korFont = Font.CreateDynamicFontFromOSFont(
-                new[] { "Malgun Gothic", "맑은 고딕", "NanumGothic", "Arial" }, 16);
+                new[] { "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", "Noto Sans CJK KR", "NanumGothic", "Arial" }, 16);
             return _korFont;
         }
 
@@ -27,8 +27,8 @@ namespace Rumors.UI
             canvas.sortingOrder = sortOrder;
             var scaler = go.AddComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1920, 1080);
-            scaler.matchWidthOrHeight = 0.5f;
+            scaler.referenceResolution = new Vector2(1280, 720);
+            scaler.matchWidthOrHeight = 0f;
             go.AddComponent<GraphicRaycaster>();
             Object.DontDestroyOnLoad(go);
             return canvas;
@@ -112,7 +112,7 @@ namespace Rumors.UI
 
             var t = go.AddComponent<Text>();
             t.font = GetKoreanFont();
-            t.fontSize = fontSize;
+            t.fontSize = Mathf.Max(16, fontSize);
             t.color = color;
             t.text = content;
             t.alignment = align;

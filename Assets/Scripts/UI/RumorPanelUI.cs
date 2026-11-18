@@ -26,12 +26,12 @@ namespace Rumors.UI
         {
             // Toggle button (top-right area, below TopBar)
             RumorUIHelper.CreateButton(canvasRoot, "RumorToggleBtn", "📜 소문 목록",
-                new Vector2(110f, 36f), new Vector2(-16f, -76f),
+                new Vector2(110f, 36f), new Vector2(-188f, -76f),
                 TogglePanel, Color.white,
                 new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(1f, 1f));
 
             _root = RumorUIHelper.CreateSizedPanel(canvasRoot, "RumorPanel",
-                new Vector2(320f, 500f), new Vector2(-16f, -120f),
+                new Vector2(320f, 500f), new Vector2(-188f, -120f),
                 new Vector2(1f, 1f), new Vector2(1f, 1f),
                 Color.white, null, new Vector2(1f, 1f));
 

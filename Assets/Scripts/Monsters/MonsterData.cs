@@ -10,7 +10,7 @@ namespace Rumors.Core
     /// </summary>
     public class MonsterData
     {
-        public string         Id          { get; }
+        public string         Id          { get; private set; }
         public string         Name        { get; set; }
         public MonsterSpecies Species     { get; }
         public MonsterElement Element     { get; set; }
@@ -53,6 +53,11 @@ namespace Rumors.Core
             Loyalty     = Mathf.Clamp(loyalty,  0, 100);
             Ambition    = Mathf.Clamp(ambition, 0, 100);
             Fame        = Mathf.Clamp(fame,     0, 100);
+        }
+
+        public void RestoreId(string id)
+        {
+            if (!string.IsNullOrEmpty(id)) Id = id;
         }
 
         /// <summary>Called once per day by MonsterManager.</summary>

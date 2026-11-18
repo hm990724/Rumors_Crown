@@ -30,7 +30,7 @@ namespace Rumors.UI
                 Color.white);
             var rt = panel.GetComponent<RectTransform>();
             rt.pivot = new Vector2(0.5f, 0f);
-            rt.anchoredPosition = Vector2.zero;
+            rt.anchoredPosition = new Vector2(0f, 70f);
 
             // Scroll container
             var scrollGo = new GameObject("MonsterIconScroll");

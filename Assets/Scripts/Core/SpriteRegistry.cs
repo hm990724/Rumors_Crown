@@ -114,11 +114,11 @@ namespace Rumors.Core
             string variantPath = variant > 0 ? $"{GetTileResourceName(type)}_{variant}" : null;
             if (variantPath != null)
             {
-                var vs = Load(variantPath, 16f);
+                var vs = Load(variantPath, 32f);
                 if (vs != null) return vs;
             }
 
-            return Load(GetTileResourceName(type), 16f);
+            return Load(GetTileResourceName(type), 32f);
         }
 
         private static string GetTileResourceName(TileType type)
@@ -142,7 +142,7 @@ namespace Rumors.Core
             };
         }
 
-        public static Sprite GetHighlight() => Load("Tiles/Tile_Highlight", 16f);
+        public static Sprite GetHighlight() => Load("Tiles/Tile_Highlight", 32f);
 
         public static Sprite GetBuilding(BuildingType type, bool constructed = true, int level = 1)
         {
