@@ -74,7 +74,7 @@ namespace Rumors.Overhaul
         {
             _rulerRoot=Panel(parent,"RulerSelection",Vector2.zero,Vector2.zero,Vector2.one,new Vector2(.5f,.5f),Vector2.zero,Ink);
             var root=_rulerRoot;
-            Image background=Image(root,"Backdrop",new Vector2(0,0),new Vector2(0,0),Vector2.one,new Vector2(.5f,.5f),Vector2.zero);
+            Image background=CreateUIImage(root,"Backdrop",new Vector2(0,0),new Vector2(0,0),Vector2.one,new Vector2(.5f,.5f),Vector2.zero);
             background.sprite=ReadArt("RUMORS_Menu_Backdrop");
             background.color=new Color(.43f,.32f,.51f,.45f);background.type=Image.Type.Simple;
             background.rectTransform.SetAsFirstSibling();
@@ -89,7 +89,7 @@ namespace Rumors.Overhaul
                 var kind=(RulerKind)(i+1);
                 float x=(i-1)*300;
                 var card=Panel(root,"RulerCard"+i,new Vector2(x,17),new Vector2(.5f,.5f),new Vector2(.5f,.5f),new Vector2(.5f,.5f),new Vector2(270,326),new Color(.12f,.07f,.16f,.98f));
-                var portrait=Image(card,"Portrait",new Vector2(0,-16),new Vector2(.5f,1),new Vector2(.5f,1),new Vector2(245,181));
+                var portrait=CreateUIImage(card,"Portrait",new Vector2(0,-16),new Vector2(.5f,1),new Vector2(.5f,1),new Vector2(245,181));
                 portrait.sprite=ReadArt(arts[i]);portrait.preserveAspect=false;portrait.type=Image.Type.Simple;
                 Text(card,"Name",names[i],new Vector2(0,-215),new Vector2(.5f,1),new Vector2(.5f,1),new Vector2(250,38),23,Gold);
                 Text(card,"Attribute",subtitles[i],new Vector2(0,-252),new Vector2(.5f,1),new Vector2(.5f,1),new Vector2(250,34),16,Ivory);
@@ -271,14 +271,14 @@ namespace Rumors.Overhaul
             if(sprite!=null){img.sprite=sprite;img.type=Image.Type.Sliced;img.color=tint;} else img.color=tint;
             return r;
         }
-        private static Image Image(Transform parent,string name,Vector2 pos,Vector2 min,Vector2 max,Vector2 pivot,Vector2 size)
+        private static Image CreateUIImage(Transform parent,string name,Vector2 pos,Vector2 min,Vector2 max,Vector2 pivot,Vector2 size)
         {
             var go=new GameObject(name,typeof(RectTransform),typeof(Image));go.transform.SetParent(parent,false);
             var r=(RectTransform)go.transform;r.anchorMin=min;r.anchorMax=max;r.pivot=pivot;r.anchoredPosition=pos;r.sizeDelta=size;
             return go.GetComponent<Image>();
         }
-        private static Image Image(Transform parent,string name,Vector2 pos,Vector2 min,Vector2 max,Vector2 size)
-            =>Image(parent,name,pos,min,max,new Vector2(.5f,.5f),size);
+        private static Image CreateUIImage(Transform parent,string name,Vector2 pos,Vector2 min,Vector2 max,Vector2 size)
+            =>CreateUIImage(parent,name,pos,min,max,new Vector2(.5f,.5f),size);
         private static Text Text(Transform parent,string name,string content,Vector2 pos,Vector2 anchorMin,Vector2 anchorMax,Vector2 size,int fontSize,Color color)
         {
             var go=new GameObject(name,typeof(RectTransform),typeof(Text));go.transform.SetParent(parent,false);
@@ -291,7 +291,7 @@ namespace Rumors.Overhaul
         private static Button Button(Transform parent,string name,string label,Vector2 pos,Vector2 size,Action click,Vector2? anchor=null)
         {
             var a=anchor??new Vector2(.5f,.5f);
-            var img=Image(parent,name,pos,a,a,size);img.color=new Color(.29f,.19f,.36f,.98f);
+            var img=CreateUIImage(parent,name,pos,a,a,size);img.color=new Color(.29f,.19f,.36f,.98f);
             var outline=img.gameObject.AddComponent<Outline>();outline.effectColor=new Color(.75f,.52f,.30f,.86f);outline.effectDistance=new Vector2(1.5f,-1.5f);
             var b=img.gameObject.AddComponent<Button>();b.targetGraphic=img;
             var colors=b.colors;colors.normalColor=Color.white;colors.highlightedColor=new Color(1.2f,1.04f,1.26f);colors.pressedColor=new Color(.75f,.65f,.85f);b.colors=colors;
